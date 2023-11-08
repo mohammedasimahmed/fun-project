@@ -4,6 +4,7 @@ import bgVideo from "./videos/bgVideo4.mp4";
 import avtar2 from "./videos/avtar2.mp4";
 import v3 from "./videos/v3.mp4";
 import avtar2_unscreen from "./videos/avtar2_unscreen.gif";
+import { useAnimation, motion, useInView } from "framer-motion";
 
 const App = () => {
   const headerRef = useRef(null);
@@ -13,6 +14,15 @@ const App = () => {
   const lineAppearMiddleRefs = useRef([]);
   const vdScrollRotateRef = useRef(null);
   const contentContainerRef = useRef(null);
+  const ref = useRef(null);
+
+  const isInView = useInView(ref, { once: false });
+  const controls = useAnimation();
+
+  // const animationVariants = {
+  //   initial: { opacity: 0, y: 50 },
+  //   animate: { opacity: 1, y: 0 },
+  // };
 
   useEffect(() => {
     const headerel = headerRef.current;
@@ -31,13 +41,13 @@ const App = () => {
         headerel.classList.remove("header_blur");
       }
       if (window.scrollY > 500) {
-        textVideo.style.left = "0";
-        textVideo.style.opacity = "1";
+        // textVideo.style.left = "0";
+        // textVideo.style.opacity = "1";
         contentContainer.style.opacity = "1";
         contentContainer.style.left = "0";
       } else if (window.scrollY > 20 && window.scrollY < 500) {
-        textVideo.style.left = "-230px";
-        textVideo.style.opacity = "0";
+        // textVideo.style.left = "-230px";
+        // textVideo.style.opacity = "0";
         contentContainer.style.left = "500px";
         contentContainer.style.opacity = "0";
       }
@@ -67,6 +77,12 @@ const App = () => {
     content.style.opacity = "1";
     content.style.transform = "translateY(-70px)";
   }, []);
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [isInView]);
 
   return (
     <div>
@@ -104,18 +120,29 @@ const App = () => {
       </div>
       <div className="color">
         <div className="videoContainer">
-          <div className="textVideo" ref={textVideoRef}>
-            <h2 className="trade">Trade</h2>
-            <h2 className="tradeAsset">
-              The virtual destination for digital assets
-            </h2>
-            <p>
-              Buy and sell LAND, Estates, Avatar wearables and names in the
-              Decentraland Marketplace: stocking the very best digital goods and
-              paraphernalia backed by the Ethereum blockchain.
-            </p>
-            <button className="browse">START BROWSING</button>
-          </div>
+          <motion.div
+            ref={ref}
+            variants={{
+              hidden: { opacity: 0, x: -200 },
+              visible: { opacity: 1, x: 0 },
+            }}
+            initial="hidden"
+            animate={controls}
+            transition={{ duration: 1 }}
+          >
+            <div className="textVideo" ref={textVideoRef}>
+              <h2 className="trade">Trade</h2>
+              <h2 className="tradeAsset">
+                The virtual destination for digital assets
+              </h2>
+              <p>
+                Buy and sell LAND, Estates, Avatar wearables and names in the
+                Decentraland Marketplace: stocking the very best digital goods
+                and paraphernalia backed by the Ethereum blockchain.
+              </p>
+              <button className="browse">START BROWSING</button>
+            </div>
+          </motion.div>
           {/* <video width="720" height="440" autoPlay muted loop>
             <source src={avtar2} type="video/mp4" />
             Your browser does not support the video tag.
@@ -205,9 +232,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
- 

@@ -153,16 +153,15 @@ p {
   color: white;
 }
 
-.textVideo {
+/* .textVideo {
   width: 700px;
   margin-right: 100px;
   position: relative;
   left: -230px;
   top: 0;
-  /* translate: -300px; */
   transition-duration: 2s;
   opacity: 0;
-}
+} */
 
 .videoContainer {
   display: flex;
