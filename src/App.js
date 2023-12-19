@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route,Routes } from 'react-router-dom'
 import Home from './Home'
-import MentalHealth from './MentalHealth'
 import Header from './Header'
 
 const App = () => {
@@ -10,7 +9,6 @@ const App = () => {
     <Header />
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path='/mentalHealth' element={<MentalHealth />} />
     </Routes>
     </>
   )
